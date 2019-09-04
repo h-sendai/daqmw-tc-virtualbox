@@ -1,0 +1,6 @@
+# ROOT.  Add to /home/daq/.bashrc
+
+if [ -f /usr/local/root/bin/root ]; then
+    export ROOTSYS=/usr/local/root
+    PATH=$PATH:${ROOTSYS}/bin
+fi
