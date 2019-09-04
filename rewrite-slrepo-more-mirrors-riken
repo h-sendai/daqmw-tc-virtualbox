@@ -1,0 +1,92 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import re
+import shutil
+
+repo_dir = '/etc/yum.repos.d'
+repo_files = [
+    'sl.repo',
+    'sl-security.repo',
+    'sl6x.repo',
+    'sl5x.repo',
+    'sl5x-security.repo',
+    'sl7.repo',
+    'repos.repo',
+    'sl7-security.repo',
+    'sl7-fastbugs.repo',
+    'sl-extras.repo'
+]
+
+fastest_mirror_conf = '/etc/yum/pluginconf.d/fastestmirror.conf'
+
+def append_prefer_lines():
+    f = open(fastest_mirror_conf, 'a')
+    #mirror_list = [ 'ftp.rike.jp', 'ftp.jaist.ac.jp' ]
+    #append_lines = ''
+    #for l in mirror_list:
+    #    append_lines += 'prefer=' + l + '\n'
+    #
+    f.writelines('#prefer=ftp.jaist.ac.jp\n')
+    f.writelines('prefer=ftp.riken.jp\n')
+    f.writelines('include_only=.jp\n')
+
+    f.close()
+
+def use_reflx1(orig_file):
+    new_file  = orig_file + '.new'
+    back_file = orig_file + '.bak'
+
+    try:
+        in_file  = open(orig_file, 'r')
+        out_file = open(new_file,  'w')
+    except IOError, e:
+        sys.exit(e)
+    
+    for line in in_file:
+        if re.match(r'^baseurl', line):
+            #reflx1_line = re.sub(r'ftp.scientificlinux.org/linux', 'reflx1.kek.jp',             line)
+            riken_line  = re.sub(r'ftp.scientificlinux.org/linux', 'ftp.riken.jp/Linux',        line)
+            #riken_line  = re.sub('baseurl=', '        ', riken_line)
+            jaist_line  = re.sub(r'ftp.scientificlinux.org/linux', 'ftp.jaist.ac.jp/pub/Linux', line)
+            jaist_line  = re.sub('baseurl=', '        ', jaist_line)
+            orig_line   = re.sub('baseurl=', '        ', line)
+
+            #out_file.write(reflx1_line)
+            out_file.write(riken_line)
+            out_file.write(jaist_line)
+            out_file.write(orig_line)
+        else:
+            out_file.write(line)
+    
+    in_file.close()
+    out_file.close()
+    shutil.move(orig_file, back_file)
+    shutil.move(new_file,  orig_file)
+
+def undo_to_original():
+    for i in repo_files:
+        repo_file_path = repo_dir + '/' + i
+        backup_repo_file_path = repo_file_path + '.bak'
+        if os.path.isfile(backup_repo_file_path):
+            shutil.move(backup_repo_file_path, repo_file_path)
+
+def main():
+    if len(sys.argv) == 2:
+        if sys.argv[1] == 'undo':
+            undo_to_original()
+        else:
+            sys.stderr.write('available argument: undo\n')
+        sys.exit(0)
+
+    for i in repo_files:
+        repo_file_path = repo_dir + '/' + i
+        if os.path.isfile(repo_file_path):
+            use_reflx1(repo_file_path)
+
+    if os.path.isfile(fastest_mirror_conf):
+        append_prefer_lines()
+
+if __name__ == '__main__':
+    main()
