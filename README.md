@@ -78,9 +78,9 @@ daqmw-rpmをダウンロードしてDAQ-Middlewareをセットする:
 コンソールモードのテスト:
 
     cd; mkdir MyDaq
-    cp -r /usr/share/daqmw/example/SampleReader
-    cp -r /usr/share/daqmw/example/SampleLogger
-    cp -r /usr/share/daqmw/example/SampleMonitor
+    cp -r /usr/share/daqmw/examples/SampleReader  .
+    cp -r /usr/share/daqmw/examples/SampleLogger  .
+    cp -r /usr/share/daqmw/examples/SampleMonitor .
     cd SampleReader
     make
     cd ../SampleLogger
