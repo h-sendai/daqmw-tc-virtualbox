@@ -99,6 +99,20 @@ daqmw-rpmをダウンロードしてDAQ-Middlewareをセットする:
 
 Webモードも同様にテストする。
 
+## トレーニングコース用パッケージ
+
+トレーニングコースではXilinux 3Eボードから送られているデータを読み取る
+システムをつくる。ボードがデータを送るトリガーはPCからUDPで送る。
+トリガーを送るプログラムはwxPythonをGUIとして使っているのでwxPythonを
+インストールする。xwPythonはEPELにある:
+
+    SLの場合: yum install yum-conf-epel
+    CentOSの場合: yum install epel-release
+    /etc/epel.repoのenabled=1を0に変更しておく
+    yum --enablerepo=epel install wxPython
+    (ついでにEPELからnkfも入れておく)
+    yum --enablerepo=epel install nkf
+    
 ## VirtualBoxイメージをzipでまとめる作業
 
 動作確認などに使ったファイルは全て消しておく:
