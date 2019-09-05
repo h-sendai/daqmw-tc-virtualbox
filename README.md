@@ -68,5 +68,44 @@ tar xf root-5.34.24.sl7-x86_64.bin.tar.xz -C /usr/local。/etc/ld.so.conf.d/root
 - httpdの自動起動: systemctl enable httpd
 - firewalldの停止: systemctl disable firewalld
 
+## DAQ-Middlewareのセット
 
+daqmw-rpmをダウンロードしてDAQ-Middlewareをセットする:
 
+    wget http://daqmw.kek.jp/src/daqmw-rpm
+    sudo sh daqmw-rpm install
+
+コンソールモードのテスト:
+
+    cd; mkdir MyDaq
+    cp -r /usr/share/daqmw/example/SampleReader
+    cp -r /usr/share/daqmw/example/SampleLogger
+    cp -r /usr/share/daqmw/example/SampleMonitor
+    cd SampleReader
+    make
+    cd ../SampleLogger
+    make
+    cd ..
+    cp /usr/share/daqmw/conf/reader-logger.xml .
+    (別ターミナルエミュレータを開いて)
+    daqmw-emulator
+    (元のターミナルエミュレータに戻って)
+    run.py -cl
+    cd SampleMonitor
+    make
+    cd ..
+    cp /usr/share/daqmw/conf/sample.xml .
+    run.py -cl sample.xml
+
+Webモードも同様にテストする。
+
+## VirtualBoxイメージをzipでまとめる作業
+
+動作確認などに使ったファイルは全て消しておく:
+
+    cd
+    rm -fr daqmw-tc-virtualbox
+    rm -fr MyDaq
+    rm -f .ssh/*
+
+zipにまとめてWebサイトに転送。
