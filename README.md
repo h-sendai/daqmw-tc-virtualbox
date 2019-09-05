@@ -43,7 +43,7 @@ yum install gnome-tweak-tool gnome-shell-extension-no-hot-cornerして、
 
 - その他の開発ツール
 
-    yum -y install zsh mercurial screen redhat-lsb-core nmap-ncat telnet tcpdump
+    yum -y install zsh mercurial screen redhat-lsb-core nmap-ncat telnet tcpdump wireshark-gnome
     yum -y install lsof bind-utils strace ltrace man-pages wget vim
     yum -y insatll emacs
 
