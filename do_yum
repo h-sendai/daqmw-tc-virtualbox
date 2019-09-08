@@ -15,6 +15,7 @@ if [ x$distribution = xScientific ]; then
 elif [ x$distribution = xCentOS ]; then
     yum install epel-release
 fi
+yum-config-manager --disable epel
 yum --enablerepo=epel install wxPython
 yum --enablerepo=epel install nkf
 
