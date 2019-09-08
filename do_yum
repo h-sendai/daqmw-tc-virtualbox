@@ -1,0 +1,21 @@
+#!/bin/sh
+./rewrite-slrepo-more-mirrors-riken
+yum clean all
+yum update
+yum groupinstall 'Development Tools'
+yum install kernel-devel
+yum install gnome-tweak-tool gnome-shell-extension-no-hot-corner
+yum -y install zsh mercurial screen redhat-lsb-core nmap-ncat telnet tcpdump wireshark-gnome
+yum -y install lsof bind-utils strace ltrace man-pages wget vim
+yum -y insatll emacs
+yum install boost-devel libuuid-devel mod_wsgi
+distribution=$(lsb_release -si)
+if [ x$distribution = xScientific ]; then
+    yum install yum-conf-epel
+elif [ x$distribution = xCentOS ]; then
+    yum install epel-release
+fi
+yum --enablerepo=epel install wxPython
+yum --enablerepo=epel install nkf
+
+# reboot
