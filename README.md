@@ -17,9 +17,9 @@ Scientific Linux 7.7イメージを作成する。CentOS 7.7でも同様。
 ## リブート後の設定
 
 - /etc/yum.repos.d/でリポジトリの向き先をftp.riken.jpに切りかえる。
-- yum clean all; yum update
-- yum groupinstall 'Development Tools'
-- yum install kernel-devel (VirtualBox Guest Addtion用)
+- yum clean all; yum -y update
+- yum -y groupinstall 'Development Tools'
+- yum -y install kernel-devel (VirtualBox Guest Addtion用)
 - reboot (新規kernelになっているかもしれないのでリブートしておく)
 - VirtualBox Guest Addtionsをセット(VirtualBoxデバイスからGuest Addtions用ISOイメージを挿入。
 CDROMアイコンをクリックしてRunを選ぶ
@@ -32,7 +32,7 @@ CDROMアイコンをクリックしてRunを選ぶ
 切替えはSuper - Space (SuperはWindowsキー)でも切替え可能。さらに英語(US)を追加しておくと
 英語キーボードを使ったときに記号の入力で困らなくなる。
 - 画面左上隅にマウスがあたったとき、ウインドウ一覧になる機能を停止するには、
-yum install gnome-tweak-tool gnome-shell-extension-no-hot-cornerして、
+yum -y install gnome-tweak-tool gnome-shell-extension-no-hot-cornerして、
 アプリケーション -> アクセサリ -> Tweaks -> 拡張機能 -> No topleft hot cornerをONにする。
 - ウインドウ上枠がメニューバーについたときにそのウインドウを最大化するのを止めるには以下のコマンド
 を実行する:
@@ -53,7 +53,7 @@ yum install gnome-tweak-tool gnome-shell-extension-no-hot-cornerして、
 なっているので、そのようになるようなvimrcサンプルを入れておく。使うには
 cd; ln -s vimrc .vimrcしてもらう。
 
-- yum install boost-devel libuuid-devel mod_wsgi
+- yum -y install boost-devel libuuid-devel mod_wsgi
 - ROOTの設定。http://daqmw.kek.jp/src/root-5.34.24.sl7-x86_64.bin.tar.xz をダウンロードし
 tar xf root-5.34.24.sl7-x86_64.bin.tar.xz -C /usr/local。/etc/ld.so.conf.d/root.confを
 作り、/usr/local/root/libと書く。書いたあとldconfigを実行。
@@ -106,12 +106,12 @@ Webモードも同様にテストする。
 トリガーを送るプログラムはwxPythonをGUIとして使っているのでwxPythonを
 インストールする。xwPythonはEPELにある:
 
-    SLの場合: yum install yum-conf-epel
-    CentOSの場合: yum install epel-release
+    SLの場合: yum -y install yum-conf-epel
+    CentOSの場合: yum -y install epel-release
     /etc/epel.repoのenabled=1を0に変更しておく
-    yum --enablerepo=epel install wxPython
+    yum --enablerepo=epel -y install wxPython
     (ついでにEPELからnkfも入れておく)
-    yum --enablerepo=epel install nkf
+    yum -y --enablerepo=epel install nkf
     
 ## VirtualBoxイメージをzipでまとめる作業
 
