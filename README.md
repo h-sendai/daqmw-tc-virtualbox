@@ -45,7 +45,7 @@ yum -y install gnome-tweak-tool gnome-shell-extension-no-hot-cornerして、
 
     yum -y install zsh mercurial screen redhat-lsb-core nmap-ncat telnet tcpdump wireshark-gnome
     yum -y install lsof bind-utils strace ltrace man-pages wget vim sysstat
-    yum -y insatll emacs
+    yum -y install emacs
 
 ## DAQ-Middleware関連パッケージ、設定
 
