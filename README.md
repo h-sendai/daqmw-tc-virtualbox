@@ -10,19 +10,39 @@ Scientific Linux 7.7イメージを作成する。CentOS 7.7でも同様。
 
 ## SL 7.7インストール
 
-- 日本語環境でセットアップする。英語キーボード対応もあとから可能。
-- General Purpose用を選択する。開発環境などはあとから追加する。
-- General Purposeでインストールに15分かかる。
+kickstartでインストールする。kickstartファイルはこのディレクトリにある
+anaconda-netinst-ks.cfgを使う。
 
-## リブート後の設定
+- このkickstartファイルをhttpsでアクセスできるところにおく。
+- VirtualBoxにて、ネットワークインストール用ISOイメージで起動する。
+- インストーラが起動したら矢印キーで"Install SL ..."にあわせ、tabキーを叩く。
+Linuxコマンドライン入力ができるようになるのでks.cfgを置いたURLを
+https://.../.../anaconda-netinst-ks.cfgのように入力する。
+- あとは自動でGeneral PurposeのSoftware Environment + git, mercuralが
+セットされる。開発環境はあとから入れる。
+- 一般ユーザーとしてユーザーID daq がパスワードabcd1234でセットされている。
+- daqユーザーはsudoでrootになれる。
+- 言語は日本語環境になっている。英語キーボードを使うことも可能。下のメモをみよ。
 
-- /etc/yum.repos.d/でリポジトリの向き先をftp.riken.jpに切りかえる。
-- yum clean all; yum -y update
-- yum -y groupinstall 'Development Tools'
-- yum -y install kernel-devel (VirtualBox Guest Addtion用)
-- reboot (新規kernelになっているかもしれないのでリブートしておく)
-- VirtualBox Guest Addtionsをセット(VirtualBoxデバイスからGuest Addtions用ISOイメージを挿入。
-CDROMアイコンをクリックしてRunを選ぶ
+## リブート後の作業
+
+- 最初の起動時にライセンスを承諾する。
+- daqユーザーでログインする。
+- git clone https://github.com/h-sendai/daqmw-tc-virtualbox.git
+- daqmw-tc-virtualboxというディレクトリができる。
+- ./do_yumで設定、パッケージのインストールを行う。動作は
+    - /etc/yum.repos.d/の設定がftp.riken.jpを使う(rewrite-slrepo-more-mirrors-riken)
+    - yum -y update
+    - yum -y 'Development Tools'
+    - yum -y その他パッケージ
+    - EPELリポジトリをセット。いったんenabled=0にする。
+    - EPELからwxPython、nkfのインストール
+- 以上でVirtualBox Guest Addtionsが入るようになっているのでいれる。
+- ROOTを入れた場合のbash rcの設定: cp add_bash /etc/profile.d/cern-root.sh
+- ROOTを入れたあとライブラリを使えるようにする: cp root.conf /etc/ld.so.conf.d; ldconfig
+
+## その他のメモ
+
 - /etc/defaul/grubでGRUB_CMDLINE_LINUXからrhgbを削除(ブート時にテキストでブート進捗具合を
 表示させるため)。cd /boot/grub2; grub2-mkconfig -o grub.cfg
 - reboot
