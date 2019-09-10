@@ -44,7 +44,7 @@ yum install gnome-tweak-tool gnome-shell-extension-no-hot-cornerして、
 - その他の開発ツール
 
     yum -y install zsh mercurial screen redhat-lsb-core nmap-ncat telnet tcpdump wireshark-gnome
-    yum -y install lsof bind-utils strace ltrace man-pages wget vim
+    yum -y install lsof bind-utils strace ltrace man-pages wget vim sysstat
     yum -y insatll emacs
 
 ## DAQ-Middleware関連パッケージ、設定
