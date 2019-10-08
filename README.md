@@ -43,25 +43,36 @@ https://.../.../anaconda-netinst-ks.cfgのように入力する。
 
 ## その他のメモ
 
-- /etc/defaul/grubでGRUB_CMDLINE_LINUXからrhgbを削除(ブート時にテキストでブート進捗具合を
-表示させるため)。cd /boot/grub2; grub2-mkconfig -o grub.cfg
-- reboot
-- GNOMEメニュー右側電源ボタンをクリックして設定アイコン(ドライバとスパナのアイコン)をクリック。
+### grub
+
+/etc/defaul/grubでGRUB_CMDLINE_LINUXからrhgbを削除(ブート時にテキストでブート進捗具合を
+表示させるため)。
+
+    cd /boot/grub2; grub2-mkconfig -o grub.cfg
+    reboot
+
+### GNOME
+
+GNOMEメニュー右側電源ボタンをクリックして設定アイコン(ドライバとスパナのアイコン)をクリック。
 「地域と言語」をえらび、「入力ソース」から「日本語(かな漢字)」を追加する。これでGNOMEメニュー
 右側にjaと表示されるところで「日本語(かな漢字)が選べるようになり、漢字変換が可能になる。
 切替えはSuper - Space (SuperはWindowsキー)でも切替え可能。さらに英語(US)を追加しておくと
 英語キーボードを使ったときに記号の入力で困らなくなる。
-- 画面左上隅にマウスがあたったとき、ウインドウ一覧になる機能を停止するには、
-yum -y install gnome-tweak-tool gnome-shell-extension-no-hot-cornerして、
-アプリケーション -> アクセサリ -> Tweaks -> 拡張機能 -> No topleft hot cornerをONにする。
-- ウインドウ上枠がメニューバーについたときにそのウインドウを最大化するのを止めるには以下のコマンド
+
+画面左上隅にマウスがあたったとき、ウインドウ一覧になる機能を停止するには、
+
+    yum -y install gnome-tweak-tool gnome-shell-extension-no-hot-corner
+
+して、アプリケーション -> アクセサリ -> Tweaks -> 拡張機能 -> No topleft hot cornerをONにする。
+
+ウインドウ上枠がメニューバーについたときにそのウインドウを最大化するのを止めるには以下のコマンド
 を実行する:
 
     gsettings set org.gnome.mutter auto-maximize false
     gsettings set org.gnome.shell.overrides edge-tiling false
     gsettings set org.gnome.shell.extensions.classic-overrides edge-tiling false
 
-- その他の開発ツール
+### その他の開発ツール
 
     yum -y install zsh mercurial screen redhat-lsb-core nmap-ncat telnet tcpdump wireshark-gnome
     yum -y install lsof bind-utils strace ltrace man-pages wget vim sysstat
